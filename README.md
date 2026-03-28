@@ -271,7 +271,7 @@ PACDOOR uses a **fact-driven reactive planner**. Modules declare what fact types
    |  RECON ---> ENUM ---> VULN ---> EXPLOIT  |
    |    |          |         |          |     |
    |    v          v         v          v     |
-   |   POST <--- LATERAL (loop max 3x) ------+
+   |   POST <--- LATERAL (loop max 3x) -----+ |
    +------------------------------------------+
 ```
 
