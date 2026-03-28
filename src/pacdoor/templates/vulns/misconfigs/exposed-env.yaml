@@ -1,0 +1,30 @@
+id: exposed-env
+info:
+  name: Exposed .env File
+  severity: critical
+  description: >
+    The application .env file is publicly accessible and may contain
+    database passwords, API keys, application secrets, and other
+    sensitive configuration values.
+  classification:
+    cvss-score: 9.1
+  reference:
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/05-Enumerate_Infrastructure_and_Application_Admin_Interfaces
+  remediation: >
+    Block access to .env files in your web server configuration.
+    Never store .env files inside the web root. Rotate all exposed
+    secrets immediately.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/.env"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "DB_PASSWORD"
+          - "APP_KEY"

@@ -1,0 +1,43 @@
+id: prometheus-unauthenticated
+info:
+  name: "Prometheus Server Unauthenticated Access"
+  severity: high
+  description: >
+    The Prometheus monitoring server is publicly accessible without
+    authentication.  Prometheus collects and stores time-series metrics
+    from monitored targets and provides a powerful query language
+    (PromQL) for data analysis.  Without authentication, an attacker
+    can access all collected metrics which may include internal
+    infrastructure details, application performance data, error rates,
+    network topology, and potentially sensitive labels containing
+    hostnames, IP addresses, and service names.  The /api/v1/targets
+    endpoint reveals all monitored endpoints and their configuration.
+  classification:
+    cvss-score: 7.5
+  reference:
+    - https://prometheus.io/docs/operating/security/
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/02-Testing_for_Default_Credentials
+  remediation: >
+    Place Prometheus behind a reverse proxy with authentication
+    (e.g., nginx with HTTP Basic Auth or OAuth2 proxy).  Restrict
+    network access to Prometheus to trusted management networks.
+    Use --web.external-url to set a base path and add firewall rules
+    to block direct access.  Consider using Thanos or Grafana as
+    authenticated frontends for metric querying.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/api/v1/status/config"
+      - "{{BaseURL}}/api/v1/targets"
+      - "{{BaseURL}}/graph"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "prometheus"
+          - "scrape_configs"
+          - "targets"

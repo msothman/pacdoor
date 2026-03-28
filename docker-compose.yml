@@ -1,0 +1,21 @@
+# =============================================================================
+# PACDOOR - Docker Compose
+#
+# Usage:
+#   docker compose run pacdoor 10.0.0.0/24
+#   docker compose run pacdoor 10.0.0.0/24 --profile aggressive
+#   docker compose run pacdoor 10.0.0.0/24 -u admin -p pass -d CORP
+#
+# Results are written to ./results/ on the host.
+# =============================================================================
+
+services:
+  pacdoor:
+    build: .
+    # Host networking is required for raw socket scanning (SYN scan, ICMP,
+    # UDP scan). Without this, only TCP connect scans will work.
+    network_mode: host
+    volumes:
+      - ./results:/results
+    # Pass through any additional arguments after the service name
+    # e.g.: docker compose run pacdoor 10.0.0.0/24 --profile stealth

@@ -1,0 +1,40 @@
+id: apache-status-exposed
+info:
+  name: "Apache Server Status Exposed"
+  severity: medium
+  description: >
+    The Apache mod_status module is enabled and publicly accessible at
+    /server-status.  This page reveals detailed information about the
+    server including current requests, client IP addresses, request
+    URIs, virtual hosts, CPU usage, and uptime.  An attacker can use
+    this information to enumerate internal paths, identify other
+    virtual hosts, discover backend systems, and time attacks based on
+    server load.  In ExtendedStatus mode, full request details
+    including query strings are exposed.
+  classification:
+    cvss-score: 5.3
+  reference:
+    - https://httpd.apache.org/docs/2.4/mod/mod_status.html
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/06-Test_HTTP_Methods
+  remediation: >
+    Restrict access to /server-status to trusted IP addresses only
+    using Apache's Require directive.  In production environments,
+    disable mod_status entirely if not needed.  If monitoring is
+    required, use a dedicated monitoring endpoint behind
+    authentication or on a separate management interface.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/server-status"
+      - "{{BaseURL}}/server-status?auto"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "Apache Server Status"
+          - "Server uptime"
+          - "Total accesses"

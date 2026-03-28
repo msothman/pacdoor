@@ -1,0 +1,66 @@
+id: backup-files-exposed
+info:
+  name: Backup and Sensitive File Discovery
+  severity: high
+  description: >
+    Backup files, database dumps, or archive files are accessible on the
+    web server.  These files often contain source code, configuration
+    data, database contents, or credentials.  Common causes include
+    editors creating backup files (*.bak, *~), manual backups left in the
+    web root, and misconfigured deployment scripts.
+  classification:
+    cvss-score: 7.5
+  reference:
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/04-Review_Old_Backup_and_Unreferenced_Files_for_Sensitive_Information
+  remediation: >
+    Remove all backup and archive files from the web root.  Configure the
+    web server to block access to common backup file extensions (.bak,
+    .old, .sql, .tar.gz, .zip, .swp).  Implement a deployment process
+    that prevents non-application files from reaching production servers.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/backup.sql"
+      - "{{BaseURL}}/backup.tar.gz"
+      - "{{BaseURL}}/backup.zip"
+      - "{{BaseURL}}/database.sql"
+      - "{{BaseURL}}/db.sql"
+      - "{{BaseURL}}/dump.sql"
+      - "{{BaseURL}}/site.tar.gz"
+      - "{{BaseURL}}/wp-config.php.bak"
+      - "{{BaseURL}}/config.php.old"
+      - "{{BaseURL}}/web.config.bak"
+      - "{{BaseURL}}/.htaccess.bak"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        negative: true
+        words:
+          - "<!DOCTYPE html>"
+          - "<html"
+          - "404 Not Found"
+
+  - method: GET
+    path:
+      - "{{BaseURL}}/index.php.bak"
+      - "{{BaseURL}}/index.php.old"
+      - "{{BaseURL}}/index.php~"
+      - "{{BaseURL}}/config.yml.bak"
+      - "{{BaseURL}}/.env.bak"
+      - "{{BaseURL}}/.env.old"
+    matchers-condition: or
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "<?php"
+          - "DB_PASSWORD"
+          - "APP_KEY"
+          - "SECRET_KEY"
+          - "password"
+          - "CREATE TABLE"
+          - "INSERT INTO"

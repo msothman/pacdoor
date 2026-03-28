@@ -1,0 +1,45 @@
+id: wp-config-backup
+info:
+  name: "WordPress Configuration Backup File Exposed"
+  severity: critical
+  description: >
+    A backup copy of the WordPress configuration file (wp-config.php)
+    is publicly accessible.  This file contains the database hostname,
+    database name, database username and password, authentication keys
+    and salts, table prefix, and other sensitive configuration values.
+    Common backup extensions include .bak, .old, .orig, .save, .swp,
+    and ~ (tilde).  This typically occurs when administrators create
+    backup copies during maintenance or when text editors create
+    automatic backup files.
+  classification:
+    cvss-score: 9.1
+  reference:
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/04-Review_Old_Backup_and_Unreferenced_Files_for_Sensitive_Information
+    - https://wordpress.org/documentation/article/editing-wp-config-php/
+  remediation: >
+    Remove all backup copies of wp-config.php from the web root
+    immediately.  Configure the web server to deny access to files
+    with backup extensions (.bak, .old, .orig, .swp, ~).  Move
+    sensitive configuration files outside the web root.  Rotate all
+    database credentials and authentication keys after removing the
+    exposed backup.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/wp-config.php.bak"
+      - "{{BaseURL}}/wp-config.php.old"
+      - "{{BaseURL}}/wp-config.php.orig"
+      - "{{BaseURL}}/wp-config.php.save"
+      - "{{BaseURL}}/wp-config.php~"
+      - "{{BaseURL}}/wp-config.bak"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "DB_NAME"
+          - "DB_USER"
+          - "DB_PASSWORD"

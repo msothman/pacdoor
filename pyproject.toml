@@ -1,0 +1,96 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pacdoor"
+version = "0.1.0"
+description = "Automated Red Team Penetration Testing Tool"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.11"
+authors = [
+    {name = "pacdoor"},
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security",
+    "Topic :: System :: Networking",
+    "Typing :: Typed",
+]
+keywords = ["pentesting", "security", "red-team", "vulnerability-scanner", "network-scanner"]
+dependencies = [
+    "aiohttp>=3.9",
+    "aiodns>=3.1",
+    "aiosqlite>=0.20",
+    "pydantic>=2.6",
+    "pyyaml>=6.0",
+    "jinja2>=3.1",
+    "cryptography>=42.0",
+    "netaddr>=1.2",
+    "rich>=13.7",
+]
+
+[project.optional-dependencies]
+tui = ["textual>=0.52"]
+protocols = [
+    "impacket>=0.11",
+    "paramiko>=3.4",
+    "ldap3>=2.9",
+    "pymongo>=4.6",
+]
+all = ["pacdoor[tui,protocols]"]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "ruff>=0.3",
+    "mypy>=1.9",
+]
+
+[project.scripts]
+pacdoor = "pacdoor.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/msothman/pacdoor"
+Repository = "https://github.com/msothman/pacdoor"
+Issues = "https://github.com/msothman/pacdoor/issues"
+Documentation = "https://github.com/msothman/pacdoor#readme"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+pacdoor = [
+    "templates/**/*.yaml",
+    "data/*.json",
+    "data/wordlists/*.txt",
+    "db/*.sql",
+    "report/templates/*.j2",
+    "tui/*.tcss",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_configs = true

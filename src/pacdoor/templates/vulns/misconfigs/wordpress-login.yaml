@@ -1,0 +1,34 @@
+id: wordpress-login-exposed
+info:
+  name: WordPress Login Page Exposed
+  severity: info
+  description: >
+    The WordPress login page (wp-login.php) is publicly accessible.  While
+    this is standard for WordPress sites, an exposed login page enables
+    username enumeration and brute-force attacks against administrator
+    accounts.  Combined with weak passwords this can lead to full site
+    compromise.
+  classification:
+    cvss-score: 2.6
+  reference:
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/03-Testing_for_Weak_Lock_Out_Mechanism
+    - https://developer.wordpress.org/advanced-administration/security/
+  remediation: >
+    Restrict access to wp-login.php and wp-admin by IP address.  Use a
+    security plugin to limit login attempts and enable two-factor
+    authentication.  Consider renaming the login URL with a plugin such
+    as WPS Hide Login.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/wp-login.php"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "wp-login"
+          - "WordPress"

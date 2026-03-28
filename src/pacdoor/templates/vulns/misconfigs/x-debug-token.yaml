@@ -1,0 +1,45 @@
+id: symfony-debug-token-exposed
+info:
+  name: "Symfony Debug Toolbar Token Exposed"
+  severity: high
+  description: >
+    The Symfony Web Debug Toolbar and Profiler are enabled and publicly
+    accessible.  The X-Debug-Token or X-Debug-Token-Link header is
+    present in responses, indicating that the Symfony profiler is
+    active.  The profiler interface at /_profiler/ exposes detailed
+    application internals including database queries, request
+    parameters, session data, environment variables, server
+    configuration, routing information, and security context.  This
+    information can be used to extract credentials, session tokens,
+    and identify further attack vectors.
+  classification:
+    cvss-score: 7.5
+  reference:
+    - https://symfony.com/doc/current/profiler.html
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/05-Enumerate_Infrastructure_and_Application_Admin_Interfaces
+  remediation: >
+    Disable the Symfony profiler and debug toolbar in production by
+    setting APP_ENV=prod and APP_DEBUG=0.  Ensure the web_profiler
+    bundle is only loaded in the dev and test environments.  If
+    profiling is needed in production, restrict access to the
+    /_profiler/ path by IP address and add authentication.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/"
+      - "{{BaseURL}}/_profiler/"
+      - "{{BaseURL}}/_profiler/latest"
+    matchers-condition: or
+    matchers:
+      - type: word
+        part: header
+        words:
+          - "X-Debug-Token"
+          - "X-Debug-Token-Link"
+      - type: word
+        part: body
+        words:
+          - "sf-toolbar"
+          - "_profiler"
+          - "Symfony Profiler"

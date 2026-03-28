@@ -1,0 +1,57 @@
+# =============================================================================
+# Docker build context exclusions
+# =============================================================================
+
+# Version control
+.git/
+.gitignore
+
+# Python caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+tests/
+
+# Scan results and databases
+pacdoor-results/
+results/
+*.db
+*.db-wal
+*.db-shm
+*.key
+
+# Updater cache
+.update_cache.json
+
+# Screenshots
+screenshots/
+
+# Downloaded templates (re-downloadable inside container)
+community/
+
+# Documentation and research notes
+RESEARCH*.md
+ARCHITECTURE.md
+
+# Docker files (prevent recursive context)
+Dockerfile
+docker-compose.yml
+.dockerignore

@@ -1,0 +1,36 @@
+id: trace-method-enabled
+info:
+  name: "HTTP TRACE Method Enabled (Cross-Site Tracing)"
+  severity: medium
+  description: >
+    The HTTP TRACE method is enabled on the web server.  The TRACE
+    method echoes back the received request, including all headers,
+    in the response body.  This can be exploited for Cross-Site
+    Tracing (XST) attacks where an attacker uses JavaScript to issue
+    a TRACE request to steal HTTP authentication headers, cookies,
+    and other sensitive information that is included in the request.
+    While modern browsers restrict TRACE via XMLHttpRequest, other
+    attack vectors exist through Flash, Java applets, or proxy chains.
+  classification:
+    cvss-score: 5.3
+  reference:
+    - https://owasp.org/www-community/attacks/Cross_Site_Tracing
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/06-Test_HTTP_Methods
+  remediation: >
+    Disable the TRACE method on the web server.  For Apache add
+    'TraceEnable off' to the configuration.  For Nginx, TRACE is
+    disabled by default.  For IIS, disable TRACE via Request
+    Filtering.  Verify the fix by testing with 'curl -X TRACE'.
+
+http:
+  - method: TRACE
+    path:
+      - "{{BaseURL}}/"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "TRACE / HTTP"

@@ -1,0 +1,164 @@
+<svg width="100%" viewBox="0 0 680 690" xmlns="http://www.w3.org/2000/svg">
+<rect width="680" height="680" fill="#000" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<g transform="translate(305, 340)" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+
+<!--
+  PRECISE MATH:
+  5 rings: r=60, 95, 130, 165, 200
+  Spacing = 35
+  Mouth = 35° each side (70° total)
+  
+  For angle θ from positive x-axis:
+  x = r*cos(θ), y = -r*sin(θ)  [SVG y is flipped]
+  
+  Mouth upper edge: θ = +35° → (r*0.8192, -r*0.5736)
+  Mouth lower edge: θ = -35° → (r*0.8192,  r*0.5736)
+  
+  Cardinal points used for gaps/connectors:
+  90°  (top):    (0, -r)
+  135° (top-L):  (-r*0.7071, -r*0.7071)
+  180° (left):   (-r, 0)
+  225° (bot-L):  (-r*0.7071,  r*0.7071)
+  270° (bottom): (0, r)
+  315° (bot-R):  (r*0.7071,  r*0.7071)
+  
+  Gap width ≈ 18° arc
+  Connector at exact angle between rings
+-->
+
+<!-- ===================== -->
+<!-- RING 5: r=200        -->
+<!-- ===================== -->
+<!-- From mouth-top (35°) CCW to gap at 80° -->
+<path d="M163.8,-114.7 A200,200 0 0,0 34.7,-197" fill="none" stroke="#fff" stroke-width="2.8" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- Gap 80-98° (top connector zone) -->
+<!-- From 98° to gap at 125° -->
+<path d="M-27.8,-198.1 A200,200 0 0,0 -114.7,-163.8" fill="none" stroke="#fff" stroke-width="2.8" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- Gap 125-143° -->
+<!-- From 143° to gap at 170° -->
+<path d="M-159.7,-121.3 A200,200 0 0,0 -197,-34.7" fill="none" stroke="#fff" stroke-width="2.8" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- Gap 170-188° -->
+<!-- From 188° to gap at 260° -->
+<path d="M-197,34.7 A200,200 0 0,0 -34.7,197" fill="none" stroke="#fff" stroke-width="2.8" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- Gap 260-278° -->
+<!-- From 278° to mouth-bottom (325°) -->
+<path d="M27.8,198.1 A200,200 0 0,0 163.8,114.7" fill="none" stroke="#fff" stroke-width="2.8" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- ===================== -->
+<!-- RING 4: r=165        -->
+<!-- ===================== -->
+<!-- From mouth-top to gap at 70° -->
+<path d="M135.2,-94.6 A165,165 0 0,0 56.4,-155.1" fill="none" stroke="#fff" stroke-width="2.8" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- Gap 70-88° -->
+<!-- 88° to 135° -->
+<path d="M5.8,-164.9 A165,165 0 0,0 -116.7,-116.7" fill="none" stroke="#fff" stroke-width="2.8" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- Gap 135-153° -->
+<!-- 153° to 215° -->
+<path d="M-147,-74.5 A165,165 0 0,0 -94.6,135.2" fill="none" stroke="#fff" stroke-width="2.8" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- Gap 215-233° -->
+<!-- 233° to 310° -->
+<path d="M-74.5,147 A165,165 0 0,0 106.1,126.3" fill="none" stroke="#fff" stroke-width="2.8" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- Gap 310-325° (mouth) -->
+
+<!-- ===================== -->
+<!-- RING 3: r=130        -->
+<!-- ===================== -->
+<!-- From mouth-top to gap at 100° -->
+<path d="M106.5,-74.6 A130,130 0 0,0 -22.6,-128" fill="none" stroke="#fff" stroke-width="2.8" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- Gap 100-118° -->
+<!-- 118° to 178° -->
+<path d="M-57.6,-116.5 A130,130 0 0,0 -130,4.5" fill="none" stroke="#fff" stroke-width="2.8" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- Gap 178-196° -->
+<!-- 196° to 270° -->
+<path d="M-124.9,-35.8 A130,130 0 0,0 0,130" fill="none" stroke="#fff" stroke-width="2.8" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- Gap 270-288° -->
+<!-- 288° to mouth-bottom -->
+<path d="M40.2,123.6 A130,130 0 0,0 106.5,74.6" fill="none" stroke="#fff" stroke-width="2.8" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- ===================== -->
+<!-- RING 2: r=95         -->
+<!-- ===================== -->
+<!-- From mouth-top to gap at 80° -->
+<path d="M77.8,-54.5 A95,95 0 0,0 16.5,-93.6" fill="none" stroke="#fff" stroke-width="2.8" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- Gap 80-98° -->
+<!-- 98° to 225° -->
+<path d="M-13.2,-94.1 A95,95 0 0,0 -67.2,67.2" fill="none" stroke="#fff" stroke-width="2.8" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- Gap 225-243° -->
+<!-- 243° to mouth-bottom -->
+<path d="M-43.1,84.6 A95,95 0 0,0 77.8,54.5" fill="none" stroke="#fff" stroke-width="2.8" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- ===================== -->
+<!-- RING 1: r=60         -->
+<!-- ===================== -->
+<!-- From mouth-top to gap at 170° -->
+<path d="M49.2,-34.4 A60,60 0 0,0 -59.1,-10.4" fill="none" stroke="#fff" stroke-width="2.8" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- Gap 170-188° -->
+<!-- 188° to mouth-bottom -->
+<path d="M-59.1,10.4 A60,60 0 0,0 49.2,34.4" fill="none" stroke="#fff" stroke-width="2.8" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- ===================== -->
+<!-- RADIAL CONNECTORS    -->
+<!-- ===================== -->
+
+<!-- 89° (top) — R5 to R4 -->
+<line x1="3.5" y1="-200" x2="2.9" y2="-165" stroke="#fff" stroke-width="2.8" style="fill:rgb(0, 0, 0);stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- 89° — R4 to R3 (skip, no aligned gaps) -->
+
+<!-- 89° — R2 to R3 -->
+<line x1="-1.7" y1="-95" x2="-2.3" y2="-130" stroke="#fff" stroke-width="2.8" style="fill:rgb(0, 0, 0);stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- 109° — R3 to R4 (bridges gap ~100-118 to ~88) -->
+<line x1="-38" y1="-123" x2="-50" y2="-156" stroke="#fff" stroke-width="2.8" style="fill:rgb(0, 0, 0);stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- 134° — R4 to R5 -->
+<line x1="-116" y1="-117" x2="-140" y2="-143" stroke="#fff" stroke-width="2.8" style="fill:rgb(0, 0, 0);stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- 179° (left) — R5 to R4 to R3 to R2 to R1 — the main maze path inward -->
+<line x1="-200" y1="3.5" x2="-165" y2="2.9" stroke="#fff" stroke-width="2.8" style="fill:rgb(0, 0, 0);stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<line x1="-165" y1="2.9" x2="-130" y2="2.3" stroke="#fff" stroke-width="2.8" style="fill:rgb(0, 0, 0);stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<!-- R3 gap at 178-196° aligns with R2 continuous section — no connector needed, path turns -->
+
+<!-- 187° — R1 to R2 -->
+<line x1="-59.1" y1="7.3" x2="-94" y2="11.5" stroke="#fff" stroke-width="2.8" style="fill:rgb(0, 0, 0);stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- 187° — R3 to R2 -->
+<line x1="-128" y1="15.7" x2="-93.5" y2="11.5" stroke="#fff" stroke-width="2.8" style="fill:rgb(0, 0, 0);stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- 224° — R4 to R3 (bottom-left) -->
+<line x1="-98" y1="130" x2="-80" y2="106" stroke="#fff" stroke-width="2.8" style="fill:rgb(0, 0, 0);stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- 234° — R2 to R3 -->
+<line x1="-55" y1="78" x2="-72" y2="102" stroke="#fff" stroke-width="2.8" style="fill:rgb(0, 0, 0);stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- 269° (bottom) — R5 to R4 -->
+<line x1="-3.5" y1="200" x2="-2.9" y2="165" stroke="#fff" stroke-width="2.8" style="fill:rgb(0, 0, 0);stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- 279° — R3 to R4 -->
+<line x1="20" y1="129" x2="26" y2="163" stroke="#fff" stroke-width="2.8" style="fill:rgb(0, 0, 0);stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- 279° — R3 to R2 -->
+<line x1="20" y1="129" x2="15" y2="94" stroke="#fff" stroke-width="2.8" style="fill:rgb(0, 0, 0);stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- ===================== -->
+<!-- MOUTH LINES          -->
+<!-- ===================== -->
+<line x1="38" y1="-22" x2="163.8" y2="-114.7" stroke="#fff" stroke-width="2.8" stroke-linecap="round" style="fill:rgb(0, 0, 0);stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:round;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<line x1="38" y1="22" x2="163.8" y2="114.7" stroke="#fff" stroke-width="2.8" stroke-linecap="round" style="fill:rgb(0, 0, 0);stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:round;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- ===================== -->
+<!-- PAC-DOTS             -->
+<!-- ===================== -->
+<circle cx="90" cy="0" r="7" fill="#fff" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<circle cx="120" cy="0" r="7" fill="#fff" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<circle cx="150" cy="0" r="7" fill="#fff" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- ===================== -->
+<!-- KEYHOLE              -->
+<!-- ===================== -->
+<circle cx="0" cy="0" r="36" fill="#000" stroke="#fff" stroke-width="2.8" style="fill:rgb(0, 0, 0);stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<circle cx="0" cy="-7" r="10" fill="#fff" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<path d="M-6,1 Q-7,18 0,22 Q7,18 6,1 Z" fill="#fff" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+</g>
+</svg>

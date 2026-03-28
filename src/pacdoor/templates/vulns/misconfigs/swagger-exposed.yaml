@@ -1,0 +1,39 @@
+id: swagger-ui-exposed
+info:
+  name: Swagger UI / OpenAPI Documentation Exposed
+  severity: medium
+  description: >
+    The Swagger UI or OpenAPI specification is publicly accessible.  This
+    reveals the complete API surface including all endpoints, parameters,
+    authentication schemes, and data models.  An attacker can use this
+    information to discover hidden or administrative API endpoints,
+    understand request formats for injection attacks, and identify
+    business logic vulnerabilities without any guesswork.
+  classification:
+    cvss-score: 5.3
+  reference:
+    - https://swagger.io/tools/swagger-ui/
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/05-Review_Web_Page_Content_for_Information_Leakage
+  remediation: >
+    Disable Swagger UI in production environments.  If API documentation
+    must be available, restrict access via authentication and IP
+    allowlisting.  Remove or protect the OpenAPI specification JSON/YAML
+    endpoint.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/swagger-ui.html"
+      - "{{BaseURL}}/swagger-ui/"
+      - "{{BaseURL}}/swagger-ui/index.html"
+      - "{{BaseURL}}/api-docs"
+      - "{{BaseURL}}/v2/api-docs"
+      - "{{BaseURL}}/v3/api-docs"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "swagger"

@@ -1,0 +1,35 @@
+id: jenkins-unauthenticated
+info:
+  name: Jenkins Script Console Accessible Without Authentication
+  severity: critical
+  description: >
+    The Jenkins Script Console is accessible without authentication.  This
+    endpoint allows execution of arbitrary Groovy scripts on the Jenkins
+    server, providing full remote code execution.  An attacker can read
+    and write files on the server, access stored credentials, pivot to
+    internal networks, and compromise the entire CI/CD pipeline.
+  classification:
+    cvss-score: 9.8
+  reference:
+    - https://www.jenkins.io/doc/book/managing/script-console/
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/05-Enumerate_Infrastructure_and_Application_Admin_Interfaces
+  remediation: >
+    Enable Jenkins security immediately and require authentication for all
+    access.  Configure matrix-based authorization or role-based access
+    control.  Restrict network access to the Jenkins web interface.
+    Disable the Script Console or restrict it to administrators only.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/script"
+      - "{{BaseURL}}/jenkins/script"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "Script Console"
+          - "Groovy script"

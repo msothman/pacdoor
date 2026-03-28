@@ -1,0 +1,52 @@
+id: sonarqube-default-creds
+info:
+  name: "SonarQube Default Credentials (admin:admin)"
+  severity: critical
+  description: >
+    The SonarQube code quality platform is accessible with the default
+    credentials admin:admin.  SonarQube stores source code analysis
+    results including all scanned source code, detected
+    vulnerabilities, security hotspots, code smells, and project
+    configuration.  An attacker with admin access can view all
+    analyzed source code, extract security vulnerability details,
+    modify quality profiles and gates, and access webhook
+    configurations that may contain tokens for CI/CD systems.
+  classification:
+    cvss-score: 9.8
+  reference:
+    - https://docs.sonarqube.org/latest/instance-administration/security/
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/02-Testing_for_Default_Credentials
+  remediation: >
+    Change the admin password immediately after installation.
+    Disable the default admin account and create named admin accounts.
+    Enable LDAP or SAML authentication.  Restrict network access to
+    SonarQube.  Configure SonarQube to require authentication for all
+    access by setting sonar.forceAuthentication=true.
+
+http:
+  - method: POST
+    path:
+      - "{{BaseURL}}/api/authentication/login"
+    headers:
+      Content-Type: "application/x-www-form-urlencoded"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "valid"
+  - method: GET
+    path:
+      - "{{BaseURL}}/api/system/status"
+      - "{{BaseURL}}/sessions/new"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "SonarQube"
+          - "sonar"

@@ -1,0 +1,44 @@
+id: graphql-introspection-enabled
+info:
+  name: "GraphQL Introspection Enabled"
+  severity: medium
+  description: >
+    GraphQL introspection is enabled on this endpoint, allowing anyone
+    to query the full API schema.  Introspection reveals all types,
+    fields, queries, mutations, subscriptions, and their arguments.
+    An attacker can use this to fully map the API surface, discover
+    hidden or administrative operations, identify sensitive data
+    fields, and craft targeted attacks.  While introspection is
+    useful during development, it should be disabled in production to
+    reduce the attack surface.
+  classification:
+    cvss-score: 5.3
+  reference:
+    - https://graphql.org/learn/introspection/
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/12-API_Testing/01-Testing_GraphQL
+    - https://cheatsheetseries.owasp.org/cheatsheets/GraphQL_Cheat_Sheet.html
+  remediation: >
+    Disable GraphQL introspection in production.  For Apollo Server
+    set introspection: false.  For graphql-java use
+    NoIntrospectionGraphqlRule.  For Hasura set HASURA_GRAPHQL_ENABLE_
+    ALLOWLIST.  Implement field-level authorization and query depth
+    limiting as defense in depth measures.
+
+http:
+  - method: POST
+    path:
+      - "{{BaseURL}}/graphql"
+      - "{{BaseURL}}/graphql/"
+      - "{{BaseURL}}/api/graphql"
+    headers:
+      Content-Type: "application/json"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "__schema"
+          - "queryType"
+          - "__type"

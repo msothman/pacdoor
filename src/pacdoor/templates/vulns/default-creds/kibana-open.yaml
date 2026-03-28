@@ -1,0 +1,40 @@
+id: kibana-unauthenticated
+info:
+  name: "Kibana Dashboard Unauthenticated Access"
+  severity: high
+  description: >
+    The Kibana dashboard is publicly accessible without authentication.
+    Kibana provides visualization and exploration capabilities for
+    Elasticsearch indices.  Without authentication, an attacker can
+    view all indexed data including application logs, security events,
+    metrics, and potentially sensitive business data.  Kibana also
+    provides Dev Tools with a console that can execute arbitrary
+    Elasticsearch queries, including write and delete operations on
+    the underlying data store.
+  classification:
+    cvss-score: 7.5
+  reference:
+    - https://www.elastic.co/guide/en/kibana/current/kibana-authentication.html
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/02-Testing_for_Default_Credentials
+  remediation: >
+    Enable Elasticsearch security features and configure Kibana
+    authentication using the built-in Elastic security or an external
+    identity provider (SAML, OIDC, LDAP).  Restrict network access
+    to Kibana to trusted management networks.  Place Kibana behind a
+    reverse proxy with authentication.  Disable anonymous access.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/api/status"
+      - "{{BaseURL}}/app/kibana"
+      - "{{BaseURL}}/app/home"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "kibana"
+          - "version"

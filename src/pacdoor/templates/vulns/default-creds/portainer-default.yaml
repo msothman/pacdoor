@@ -1,0 +1,47 @@
+id: portainer-default-setup
+info:
+  name: "Portainer Container Management Open/Default Setup"
+  severity: high
+  description: >
+    Portainer container management interface is publicly accessible.
+    If the initial admin account has not been configured, the setup
+    wizard allows anyone to create an administrator account and gain
+    full control over the Docker or Kubernetes environment.  Even
+    after setup, Portainer with default or weak credentials provides
+    an attacker with the ability to manage containers, images,
+    volumes, networks, and execute commands inside running containers,
+    effectively granting root access to the host system.
+  classification:
+    cvss-score: 8.8
+  reference:
+    - https://docs.portainer.io/start/install
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/02-Testing_for_Default_Credentials
+  remediation: >
+    Complete the Portainer initial setup immediately if it is still
+    pending to prevent unauthorized account creation.  Restrict
+    Portainer access to trusted management networks via firewall
+    rules.  Enable HTTPS with a valid certificate.  Configure
+    external authentication (LDAP/AD/OAuth) instead of local
+    accounts.  Implement role-based access control.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/api/status"
+      - "{{BaseURL}}/api/users/admin/check"
+      - "{{BaseURL}}/"
+    matchers-condition: or
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "portainer"
+          - "InstanceID"
+      - type: regex
+        part: body
+        regex:
+          - "(?i)(portainer|docker|kubernetes)"
+      - type: word
+        part: header
+        words:
+          - "portainer"

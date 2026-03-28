@@ -1,0 +1,44 @@
+id: minio-default-creds
+info:
+  name: "MinIO Default Credentials (minioadmin:minioadmin)"
+  severity: critical
+  description: >
+    The MinIO object storage server is accessible with the default
+    credentials minioadmin:minioadmin.  MinIO provides S3-compatible
+    object storage and with admin credentials an attacker gains full
+    access to all stored objects (files), bucket configurations,
+    access policies, and service accounts.  Data stored in MinIO
+    often includes application uploads, backups, logs, and other
+    sensitive business data.  The attacker can also create new access
+    keys, modify bucket policies, and exfiltrate or delete all stored
+    data.
+  classification:
+    cvss-score: 9.8
+  reference:
+    - https://min.io/docs/minio/linux/administration/identity-access-management.html
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/02-Testing_for_Default_Credentials
+  remediation: >
+    Change the MinIO root credentials immediately by setting
+    MINIO_ROOT_USER and MINIO_ROOT_PASSWORD environment variables to
+    strong values.  Enable TLS encryption.  Configure IAM policies
+    with least-privilege access.  Place MinIO behind a firewall and
+    restrict access to authorized networks.  Enable audit logging.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/minio/login"
+      - "{{BaseURL}}/login"
+      - "{{BaseURL}}/minio/health/live"
+    matchers-condition: or
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "MinIO"
+          - "minio"
+          - "MinIO Browser"
+      - type: word
+        part: header
+        words:
+          - "MinIO"

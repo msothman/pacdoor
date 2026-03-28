@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: ["*"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-and-test:
+    name: Python ${{ matrix.python-version }} - Lint & Test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml', '**/setup.cfg', '**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.python-version }}-
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -e ".[dev]"
+
+      - name: Lint with ruff
+        run: ruff check src/
+
+      - name: Type check with mypy
+        continue-on-error: true
+        run: mypy src/pacdoor/ --ignore-missing-imports
+
+      - name: Verify CLI entry point
+        run: python -m pacdoor --help
+
+      - name: Verify module discovery
+        run: |
+          python -c "
+          from pacdoor.core.module_registry import ModuleRegistry
+          r = ModuleRegistry()
+          r.discover_modules()
+          assert r.count() == 53, f'Expected 53 modules, got {r.count()}'
+          "

@@ -1,0 +1,41 @@
+id: rabbitmq-default-creds
+info:
+  name: "RabbitMQ Management Default Credentials (guest:guest)"
+  severity: critical
+  description: >
+    The RabbitMQ Management interface is accessible with the default
+    credentials guest:guest.  The management interface provides full
+    control over the message broker including the ability to view and
+    manage queues, exchanges, bindings, connections, channels, and
+    users.  An attacker with management access can read messages from
+    queues (potentially containing sensitive data), publish malicious
+    messages, create new admin users, and disrupt message routing.
+    The guest account has full administrator privileges by default.
+  classification:
+    cvss-score: 9.8
+  reference:
+    - https://www.rabbitmq.com/access-control.html
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/02-Testing_for_Default_Credentials
+  remediation: >
+    Delete or disable the guest account and create a new admin
+    account with a strong password.  Restrict management interface
+    access to trusted networks.  Bind the management listener to
+    127.0.0.1 or a management VLAN.  Enable TLS for the management
+    interface.  Review and restrict permissions for all user accounts.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/api/whoami"
+      - "{{BaseURL}}/api/overview"
+    headers:
+      Authorization: "Basic Z3Vlc3Q6Z3Vlc3Q="
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "rabbit"
+          - "management"

@@ -1,0 +1,42 @@
+id: nexus-default-creds
+info:
+  name: "Sonatype Nexus Repository Default Credentials (admin:admin123)"
+  severity: critical
+  description: >
+    The Sonatype Nexus Repository Manager is accessible with the
+    default credentials admin:admin123.  Nexus is an artifact
+    repository used to store build artifacts, Docker images, npm
+    packages, Maven dependencies, and other software components.  An
+    attacker with admin access can upload malicious artifacts that may
+    be consumed by the build pipeline, download proprietary software
+    artifacts, modify repository configurations, and potentially
+    compromise the entire software supply chain.
+  classification:
+    cvss-score: 9.8
+  reference:
+    - https://help.sonatype.com/repomanager3/installation-and-upgrades/post-install-checklist
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/02-Testing_for_Default_Credentials
+  remediation: >
+    Change the admin password immediately after installation.  Delete
+    or disable the default admin account.  Configure LDAP or SAML
+    authentication.  Enable anonymous access auditing.  Restrict
+    network access to the Nexus management interface.  Implement
+    role-based access control for repositories.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/service/rest/v1/status"
+      - "{{BaseURL}}/"
+    headers:
+      Authorization: "Basic YWRtaW46YWRtaW4xMjM="
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "Nexus"
+          - "Sonatype"
+          - "nexus-repository-manager"

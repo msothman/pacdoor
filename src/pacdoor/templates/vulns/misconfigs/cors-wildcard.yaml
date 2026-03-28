@@ -1,0 +1,44 @@
+id: cors-wildcard-misconfiguration
+info:
+  name: "CORS Wildcard Misconfiguration"
+  severity: medium
+  description: >
+    The server returns an Access-Control-Allow-Origin header set to
+    wildcard (*) which allows any website to make cross-origin requests
+    to this application.  When combined with Access-Control-Allow-
+    Credentials, this is a critical misconfiguration that allows
+    attacker-controlled websites to make authenticated cross-origin
+    requests and read the responses.  This can lead to theft of
+    sensitive data, CSRF bypass, and account takeover.  Even without
+    credentials, a wildcard origin may expose internal API data to
+    unauthorized external sites.
+  classification:
+    cvss-score: 5.3
+  reference:
+    - https://owasp.org/www-community/attacks/CORS_OriginHeaderScrutiny
+    - https://portswigger.net/web-security/cors
+    - https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
+  remediation: >
+    Replace the wildcard Access-Control-Allow-Origin with a specific
+    allowlist of trusted origins.  Never combine wildcard origin with
+    Access-Control-Allow-Credentials: true.  Implement proper origin
+    validation on the server side.  Use a strict allowlist approach
+    rather than reflecting the Origin header back.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/"
+      - "{{BaseURL}}/api/"
+    headers:
+      Origin: "https://evil.example.com"
+    matchers-condition: or
+    matchers:
+      - type: word
+        part: header
+        words:
+          - "Access-Control-Allow-Origin: *"
+      - type: regex
+        part: header
+        regex:
+          - "(?i)Access-Control-Allow-Origin:\\s*https?://evil\\.example\\.com"

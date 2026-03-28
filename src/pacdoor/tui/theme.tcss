@@ -1,0 +1,365 @@
+/* =====================================================================
+   PACDOOR TUI Theme -- cyberpunk dark
+   ===================================================================== */
+
+Screen {
+    background: #080808;
+    color: #c9d1d9;
+}
+
+/* -- Header ----------------------------------------------------------- */
+
+#scan-header {
+    dock: top;
+    height: 3;
+    background: #0d1117;
+    color: #e6edf3;
+    padding: 0 1;
+    border-bottom: tall #1a1f29;
+}
+
+/* -- Tab system ------------------------------------------------------- */
+
+TabbedContent {
+    height: 1fr;
+}
+
+TabPane {
+    padding: 0;
+}
+
+TabbedContent > ContentSwitcher {
+    height: 1fr;
+}
+
+Tabs {
+    background: #0d1117;
+    dock: top;
+    height: 3;
+}
+
+Tab {
+    background: #0d1117;
+    color: #8b949e;
+    padding: 0 3;
+    margin: 0;
+}
+
+Tab.-active {
+    background: #161b22;
+    color: #00ff41;
+    text-style: bold;
+}
+
+Tab:hover {
+    background: #161b22;
+    color: #58a6ff;
+}
+
+Underline > .underline--bar {
+    color: #00ff41;
+    background: #1a1f29;
+}
+
+/* -- Activity tab ----------------------------------------------------- */
+
+#activity-layout {
+    layout: horizontal;
+    height: 1fr;
+}
+
+#activity-log {
+    width: 1fr;
+    height: 1fr;
+    background: #0a0a0a;
+    color: #b0b0b0;
+    padding: 0 1;
+    border-right: tall #1a1f29;
+    scrollbar-size-vertical: 1;
+    scrollbar-color: #222222;
+    scrollbar-color-hover: #444444;
+    scrollbar-color-active: #00ff41;
+    scrollbar-background: #0a0a0a;
+    scrollbar-background-hover: #0a0a0a;
+    scrollbar-background-active: #0a0a0a;
+}
+
+#stats-sidebar {
+    width: 36;
+    height: 1fr;
+    background: #0d1117;
+    padding: 1 2;
+}
+
+#severity-bars {
+    height: auto;
+    min-height: 10;
+    padding: 0 0 1 0;
+    border-bottom: tall #1a1f29;
+}
+
+#stats-panel {
+    height: auto;
+    padding: 1 0;
+}
+
+/* -- Hosts tab -------------------------------------------------------- */
+
+#hosts-container {
+    height: 1fr;
+}
+
+#hosts-filter {
+    dock: top;
+    height: 3;
+    background: #0d1117;
+    color: #c9d1d9;
+    border: tall #1a1f29;
+    padding: 0 1;
+    margin: 0 0 0 0;
+}
+
+#hosts-filter:focus {
+    border: tall #00ff41;
+}
+
+/* -- Findings tab ----------------------------------------------------- */
+
+#findings-container {
+    height: 1fr;
+}
+
+#findings-filter {
+    dock: top;
+    height: 3;
+    background: #0d1117;
+    color: #c9d1d9;
+    border: tall #1a1f29;
+    padding: 0 1;
+    margin: 0 0 0 0;
+}
+
+#findings-filter:focus {
+    border: tall #00ff41;
+}
+
+/* -- Data tables (all tabs) ------------------------------------------- */
+
+DataTable {
+    height: 1fr;
+    background: #0a0a0a;
+}
+
+DataTable > .datatable--header {
+    background: #161b22;
+    color: #00ff41;
+    text-style: bold;
+}
+
+DataTable > .datatable--cursor {
+    background: #0f2b0f;
+    color: #ffffff;
+}
+
+DataTable > .datatable--even-row {
+    background: #0a0a0a;
+}
+
+DataTable > .datatable--odd-row {
+    background: #0c0c0c;
+}
+
+DataTable:focus > .datatable--cursor {
+    background: #143614;
+}
+
+/* -- Host detail panel (P2.1) ----------------------------------------- */
+
+#host-detail-panel {
+    height: auto;
+    max-height: 50%;
+    background: #0d1117;
+    border-top: tall #1a1f29;
+    padding: 0 1;
+    overflow-y: auto;
+}
+
+#host-detail-title {
+    height: auto;
+    color: #00ff41;
+    text-style: bold;
+    padding: 1 0 0 0;
+}
+
+#host-detail-info {
+    height: auto;
+    color: #c9d1d9;
+    padding: 0 0 1 0;
+}
+
+#host-ports-label,
+#host-findings-label,
+#host-creds-label,
+#host-paths-label {
+    height: auto;
+    color: #58a6ff;
+    text-style: bold;
+    padding: 1 0 0 0;
+}
+
+#host-ports-table,
+#host-findings-table,
+#host-creds-table,
+#host-paths-table {
+    height: auto;
+    max-height: 8;
+    background: #0a0a0a;
+}
+
+/* -- Finding detail panel (P2.2) -------------------------------------- */
+
+#finding-detail-panel {
+    height: auto;
+    max-height: 50%;
+    background: #0d1117;
+    border-top: tall #1a1f29;
+    padding: 0 1;
+    overflow-y: auto;
+}
+
+#finding-detail-title {
+    height: auto;
+    color: #00ff41;
+    text-style: bold;
+    padding: 1 0 0 0;
+}
+
+#finding-detail-body {
+    height: auto;
+    color: #c9d1d9;
+    padding: 0 0 1 0;
+}
+
+#finding-hosts-label {
+    height: auto;
+    color: #58a6ff;
+    text-style: bold;
+    padding: 1 0 0 0;
+}
+
+#finding-hosts-table {
+    height: auto;
+    max-height: 6;
+    background: #0a0a0a;
+}
+
+/* -- Attack map tree (P2.5) ------------------------------------------- */
+
+#attack-tree {
+    height: 1fr;
+    background: #0a0a0a;
+    color: #c9d1d9;
+    padding: 1 2;
+    scrollbar-size-vertical: 1;
+    scrollbar-color: #222222;
+    scrollbar-color-hover: #444444;
+    scrollbar-color-active: #00ff41;
+    scrollbar-background: #0a0a0a;
+    scrollbar-background-hover: #0a0a0a;
+    scrollbar-background-active: #0a0a0a;
+}
+
+#attack-tree > .tree--cursor {
+    background: #0f2b0f;
+    color: #ffffff;
+}
+
+#attack-tree:focus > .tree--cursor {
+    background: #143614;
+}
+
+#attack-tree > .tree--guides {
+    color: #333333;
+}
+
+#attack-tree > .tree--guides-hover {
+    color: #484f58;
+}
+
+#attack-tree > .tree--guides-selected {
+    color: #00ff41;
+}
+
+/* -- Modules tab (P2.7) ----------------------------------------------- */
+
+#modules-table {
+    height: 1fr;
+    background: #0a0a0a;
+}
+
+/* -- Help overlay (P2.G) ---------------------------------------------- */
+
+#help-overlay {
+    dock: bottom;
+    height: auto;
+    max-height: 60%;
+    background: #0d1117;
+    color: #c9d1d9;
+    border: tall #00ff41;
+    padding: 1 2;
+    margin: 2 4;
+    layer: overlay;
+}
+
+/* -- Empty state messages --------------------------------------------- */
+
+.empty-state {
+    width: 100%;
+    height: 100%;
+    content-align: center middle;
+    color: #333333;
+    text-style: italic;
+}
+
+/* -- Footer ----------------------------------------------------------- */
+
+#footer-bar {
+    dock: bottom;
+    height: 1;
+    background: #0d1117;
+    color: #8b949e;
+    padding: 0 2;
+    border-top: tall #1a1f29;
+}
+
+/* -- Input widget global styling -------------------------------------- */
+
+Input {
+    background: #0d1117;
+    color: #c9d1d9;
+    border: tall #1a1f29;
+}
+
+Input:focus {
+    border: tall #00ff41;
+}
+
+Input > .input--cursor {
+    color: #00ff41;
+    background: #00ff41;
+}
+
+Input > .input--placeholder {
+    color: #666666;
+}
+
+/* -- Scrollbar global ------------------------------------------------- */
+
+Screen {
+    scrollbar-color: #222222;
+    scrollbar-color-hover: #444444;
+    scrollbar-color-active: #00ff41;
+    scrollbar-background: #0a0a0a;
+    scrollbar-background-hover: #0a0a0a;
+    scrollbar-size-vertical: 1;
+}

@@ -1,0 +1,37 @@
+id: kubernetes-api-unauthenticated
+info:
+  name: Kubernetes API Server Unauthenticated Access
+  severity: critical
+  description: >
+    The Kubernetes API server is accessible without authentication.  An
+    unauthenticated attacker can list namespaces, pods, secrets, and
+    service accounts, and potentially deploy malicious workloads or
+    extract sensitive data from the cluster.  This typically occurs when
+    the API server is configured with --anonymous-auth=true and
+    permissive RBAC bindings.
+  classification:
+    cvss-score: 9.8
+  reference:
+    - https://kubernetes.io/docs/reference/access-authn-authz/authentication/
+    - https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  remediation: >
+    Disable anonymous authentication on the API server.  Enforce RBAC
+    with least-privilege policies.  Restrict network access to the API
+    server using firewall rules or a private endpoint.  Enable audit
+    logging to detect unauthorized access attempts.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/api/v1/namespaces"
+      - "{{BaseURL}}/api/v1/pods"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "apiVersion"
+          - "items"
+          - "metadata"

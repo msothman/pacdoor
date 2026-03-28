@@ -1,0 +1,23 @@
+# Core
+aiohttp>=3.9,<4
+aiodns>=3.1
+aiosqlite>=0.20
+pydantic>=2.6
+pyyaml>=6.0
+jinja2>=3.1
+cryptography>=42.0
+netaddr>=1.2
+rich>=13.7
+
+# TUI
+textual>=0.52
+
+# Protocol libraries
+impacket>=0.11
+paramiko>=3.4
+ldap3>=2.9
+pymongo>=4.6
+
+# Testing
+pytest>=8.0
+pytest-asyncio>=0.23

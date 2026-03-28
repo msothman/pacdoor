@@ -1,0 +1,44 @@
+id: zabbix-default-creds
+info:
+  name: "Zabbix Default Credentials (Admin:zabbix)"
+  severity: critical
+  description: >
+    The Zabbix monitoring system is accessible with the default
+    credentials Admin:zabbix (note the capital A).  Zabbix provides
+    comprehensive infrastructure monitoring with agent-based data
+    collection.  With admin access, an attacker can view all monitored
+    infrastructure details including hostnames, IP addresses, network
+    topology, and performance metrics.  More critically, Zabbix allows
+    remote command execution on monitored hosts through the agent,
+    enabling lateral movement and complete infrastructure compromise.
+    The attacker can also access stored credentials for SNMP, IPMI,
+    and database monitoring.
+  classification:
+    cvss-score: 9.8
+  reference:
+    - https://www.zabbix.com/documentation/current/en/manual/quickstart/login
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/02-Testing_for_Default_Credentials
+  remediation: >
+    Change the default Admin password immediately after installation.
+    Disable or rename the default Admin account and create named
+    admin accounts.  Restrict access to the Zabbix web interface to
+    trusted management networks.  Enable HTTPS and configure
+    LDAP/SAML authentication.  Disable remote command execution in
+    Zabbix agent configuration if not required.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/index.php"
+      - "{{BaseURL}}/zabbix/"
+      - "{{BaseURL}}/zabbix/index.php"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "Zabbix"
+          - "zabbix"
+          - "sign in"

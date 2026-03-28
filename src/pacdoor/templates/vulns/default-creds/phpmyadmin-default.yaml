@@ -1,0 +1,42 @@
+id: phpmyadmin-default-creds
+info:
+  name: "phpMyAdmin Default Credentials (root with empty password)"
+  severity: critical
+  description: >
+    phpMyAdmin is accessible and accepts the default credentials of
+    root with an empty password.  phpMyAdmin provides full database
+    management capabilities including creating, modifying, and
+    deleting databases, tables, and records, as well as executing
+    arbitrary SQL queries.  With root access an attacker can read all
+    data, create new admin accounts, write files to disk via SELECT
+    INTO OUTFILE, and potentially achieve remote code execution through
+    User Defined Functions or the general_log trick.
+  classification:
+    cvss-score: 9.8
+  reference:
+    - https://www.phpmyadmin.net/security/
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/02-Testing_for_Default_Credentials
+  remediation: >
+    Set a strong password for the MySQL root account immediately.
+    Restrict phpMyAdmin access to trusted IP addresses.  Consider
+    placing phpMyAdmin behind a VPN or removing it from production
+    servers entirely.  Use a non-standard URL path for phpMyAdmin.
+    Enable two-factor authentication if supported.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/phpmyadmin/"
+      - "{{BaseURL}}/phpMyAdmin/"
+      - "{{BaseURL}}/pma/"
+    headers:
+      Authorization: "Basic cm9vdDo="
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "phpMyAdmin"
+          - "server_databases"

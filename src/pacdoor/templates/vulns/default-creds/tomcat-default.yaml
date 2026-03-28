@@ -1,0 +1,33 @@
+id: tomcat-default-creds
+info:
+  name: Apache Tomcat Default Credentials
+  severity: critical
+  description: >
+    The Apache Tomcat Manager application is accessible with the
+    default credentials (tomcat:tomcat). This allows an attacker to
+    deploy arbitrary WAR files and achieve remote code execution on
+    the server.
+  classification:
+    cvss-score: 9.8
+  reference:
+    - https://tomcat.apache.org/tomcat-9.0-doc/manager-howto.html
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/02-Testing_for_Default_Credentials
+  remediation: >
+    Change or remove default Tomcat credentials immediately. Restrict
+    access to the Manager application by IP address. Consider removing
+    the Manager application entirely in production.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/manager/html"
+    headers:
+      Authorization: "Basic dG9tY2F0OnRvbWNhdA=="
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "Tomcat Web Application Manager"

@@ -1,0 +1,36 @@
+id: elasticsearch-open
+info:
+  name: Elasticsearch Cluster Accessible Without Authentication
+  severity: high
+  description: >
+    The Elasticsearch cluster is accessible without authentication.  An
+    unauthenticated attacker can read, modify, or delete any index data.
+    This can lead to data exfiltration, data tampering, or complete data
+    loss.  The /_cat/indices endpoint reveals all index names and their
+    sizes which facilitates targeted data theft.
+  classification:
+    cvss-score: 7.5
+  reference:
+    - https://www.elastic.co/guide/en/elasticsearch/reference/current/security-minimal-setup.html
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/05-Enumerate_Infrastructure_and_Application_Admin_Interfaces
+  remediation: >
+    Enable Elasticsearch security features and require authentication for
+    all access.  Use X-Pack security or OpenSearch security plugin.
+    Restrict network access to the Elasticsearch ports (9200, 9300) using
+    firewall rules.  Never expose Elasticsearch directly to the internet.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/_cat/indices?v"
+      - "{{BaseURL}}/"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "cluster_name"
+          - "lucene_version"
+          - "tagline"

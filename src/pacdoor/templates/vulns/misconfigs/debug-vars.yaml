@@ -1,0 +1,42 @@
+id: debug-vars-exposed
+info:
+  name: "Go Debug Endpoints Exposed (pprof/vars)"
+  severity: high
+  description: >
+    Go application debug endpoints are publicly accessible.  The
+    /debug/vars endpoint exposes all exported Go variables including
+    application configuration, memory statistics, and potentially
+    sensitive runtime data.  The /debug/pprof endpoint provides CPU
+    and memory profiling data, goroutine dumps, heap profiles, and
+    other runtime diagnostics.  These endpoints can leak internal
+    application state, memory contents, and help attackers understand
+    the application architecture for further exploitation.
+  classification:
+    cvss-score: 7.5
+  reference:
+    - https://pkg.go.dev/expvar
+    - https://pkg.go.dev/net/http/pprof
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/05-Enumerate_Infrastructure_and_Application_Admin_Interfaces
+  remediation: >
+    Remove debug endpoints from production builds.  If profiling is
+    needed in production, serve pprof and expvar on a separate
+    internal port that is not publicly accessible.  Use build tags or
+    environment variable checks to disable debug handlers in
+    production.  Implement authentication for any debug endpoints.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/debug/vars"
+      - "{{BaseURL}}/debug/pprof/"
+      - "{{BaseURL}}/debug/pprof/goroutine?debug=1"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "cmdline"
+          - "memstats"
+          - "goroutine"

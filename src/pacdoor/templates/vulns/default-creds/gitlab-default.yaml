@@ -1,0 +1,40 @@
+id: gitlab-default-login
+info:
+  name: "GitLab Instance Default/Exposed Login"
+  severity: medium
+  description: >
+    A GitLab instance is publicly accessible with the default login
+    page exposed.  New GitLab installations create a root account with
+    a password set during initial setup, but if public registration is
+    enabled, anyone can create an account and access internal
+    repositories.  Even without registration, an exposed GitLab login
+    page reveals version information and may be targeted for
+    credential brute-forcing or exploitation of known GitLab
+    vulnerabilities.
+  classification:
+    cvss-score: 5.3
+  reference:
+    - https://docs.gitlab.com/ee/security/
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/02-Testing_for_Default_Credentials
+  remediation: >
+    Disable public user registration if not required by setting
+    Sign-up restrictions in Admin Area.  Restrict network access to
+    GitLab to authorized users via VPN or IP allowlisting.  Enforce
+    strong password policies and enable two-factor authentication.
+    Ensure GitLab is updated to the latest security release.  Remove
+    version information from the login page if possible.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/users/sign_in"
+      - "{{BaseURL}}/explore"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "GitLab"
+          - "sign_in"

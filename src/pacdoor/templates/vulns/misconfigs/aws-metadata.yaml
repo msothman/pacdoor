@@ -1,0 +1,40 @@
+id: aws-metadata-ssrf
+info:
+  name: AWS Instance Metadata Service (IMDS) Accessible via SSRF
+  severity: critical
+  description: >
+    The application may be vulnerable to Server-Side Request Forgery
+    (SSRF) that allows access to the AWS Instance Metadata Service at
+    169.254.169.254.  If IMDSv1 is enabled, an attacker can retrieve
+    temporary IAM credentials, instance identity documents, user data
+    scripts, and other sensitive metadata without additional
+    authentication headers.  This template checks whether the metadata
+    endpoint is directly reachable, which indicates a misconfigured
+    network or proxy.
+  classification:
+    cvss-score: 9.1
+  reference:
+    - https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html
+    - https://owasp.org/www-community/attacks/Server_Side_Request_Forgery
+    - https://blog.appsecco.com/an-ssrf-privileged-aws-keys-and-the-capital-one-breach-4c3c2cbe9c15
+  remediation: >
+    Enforce IMDSv2 which requires a session token header for all metadata
+    requests.  Block outbound access to 169.254.169.254 from application
+    containers and web servers.  Use a WAF rule to block SSRF attempts
+    targeting internal IP ranges.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/latest/meta-data/"
+      - "{{BaseURL}}/latest/meta-data/iam/security-credentials/"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "ami-id"
+          - "instance-id"
+          - "security-credentials"

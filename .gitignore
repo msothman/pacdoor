@@ -1,0 +1,69 @@
+# =============================================================================
+# Python
+# =============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+*.tar.gz
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# =============================================================================
+# IDE / Editor
+# =============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# =============================================================================
+# Testing
+# =============================================================================
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# =============================================================================
+# PACDOOR project-specific
+# =============================================================================
+
+# Scan results and databases
+pacdoor-results/
+*.db
+*.db-wal
+*.db-shm
+
+# Credential encryption keys (never commit)
+*.key
+
+# Environment variable files (never commit)
+.env
+.env.*
+
+# Updater cache
+.update_cache.json
+
+# Screenshots captured during scans
+screenshots/
+
+# Downloaded community templates (large, re-downloadable)
+community/
+
+# Research notes (not shipped)
+RESEARCH*.md
+ARCHITECTURE.md

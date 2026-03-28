@@ -1,0 +1,50 @@
+id: grafana-default-login
+info:
+  name: Grafana Default Administrator Credentials
+  severity: high
+  description: >
+    The Grafana instance is accessible with the default administrator
+    credentials (admin:admin).  An attacker with access to the dashboard
+    can view all configured data sources and their connection strings
+    (which often contain database passwords), create or modify dashboards,
+    configure alerting, and potentially achieve remote code execution
+    through data source proxy features or plugin exploits.
+  classification:
+    cvss-score: 8.8
+  reference:
+    - https://grafana.com/docs/grafana/latest/setup-grafana/sign-in-to-grafana/
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/02-Testing_for_Default_Credentials
+  remediation: >
+    Change the default admin password immediately.  Disable the default
+    admin account and create named administrator accounts.  Configure
+    authentication via LDAP, OAuth, or SAML.  Restrict network access to
+    the Grafana management interface.
+
+http:
+  - method: POST
+    path:
+      - "{{BaseURL}}/login"
+    headers:
+      Content-Type: "application/json"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "Grafana"
+          - "login"
+
+  - method: GET
+    path:
+      - "{{BaseURL}}/login"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "Grafana"
+          - "grafana-app"

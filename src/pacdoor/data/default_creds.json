@@ -1,0 +1,452 @@
+{
+  "ssh": {
+    "port": 22,
+    "credentials": [
+      {
+        "username": "root",
+        "password": "root"
+      },
+      {
+        "username": "root",
+        "password": "toor"
+      },
+      {
+        "username": "root",
+        "password": "password"
+      },
+      {
+        "username": "root",
+        "password": "admin"
+      },
+      {
+        "username": "root",
+        "password": "123456"
+      },
+      {
+        "username": "root",
+        "password": "changeme"
+      },
+      {
+        "username": "admin",
+        "password": "admin"
+      },
+      {
+        "username": "admin",
+        "password": "password"
+      },
+      {
+        "username": "admin",
+        "password": "1234"
+      },
+      {
+        "username": "user",
+        "password": "user"
+      },
+      {
+        "username": "ubuntu",
+        "password": "ubuntu"
+      },
+      {
+        "username": "pi",
+        "password": "raspberry"
+      },
+      {
+        "username": "vagrant",
+        "password": "vagrant"
+      },
+      {
+        "username": "deploy",
+        "password": "deploy"
+      },
+      {
+        "username": "test",
+        "password": "test"
+      }
+    ]
+  },
+  "ftp": {
+    "port": 21,
+    "credentials": [
+      {
+        "username": "anonymous",
+        "password": "anonymous@"
+      },
+      {
+        "username": "anonymous",
+        "password": ""
+      },
+      {
+        "username": "ftp",
+        "password": "ftp"
+      },
+      {
+        "username": "admin",
+        "password": "admin"
+      },
+      {
+        "username": "root",
+        "password": "root"
+      },
+      {
+        "username": "user",
+        "password": "user"
+      },
+      {
+        "username": "ftpuser",
+        "password": "ftpuser"
+      },
+      {
+        "username": "test",
+        "password": "test"
+      }
+    ]
+  },
+  "mysql": {
+    "port": 3306,
+    "credentials": [
+      {
+        "username": "root",
+        "password": ""
+      },
+      {
+        "username": "root",
+        "password": "root"
+      },
+      {
+        "username": "root",
+        "password": "mysql"
+      },
+      {
+        "username": "root",
+        "password": "password"
+      },
+      {
+        "username": "root",
+        "password": "toor"
+      },
+      {
+        "username": "root",
+        "password": "admin"
+      },
+      {
+        "username": "root",
+        "password": "123456"
+      },
+      {
+        "username": "mysql",
+        "password": "mysql"
+      },
+      {
+        "username": "admin",
+        "password": "admin"
+      },
+      {
+        "username": "dbadmin",
+        "password": "dbadmin"
+      },
+      {
+        "username": "test",
+        "password": "test"
+      }
+    ]
+  },
+  "mssql": {
+    "port": 1433,
+    "credentials": [
+      {
+        "username": "sa",
+        "password": ""
+      },
+      {
+        "username": "sa",
+        "password": "sa"
+      },
+      {
+        "username": "sa",
+        "password": "password"
+      },
+      {
+        "username": "sa",
+        "password": "Password1"
+      },
+      {
+        "username": "sa",
+        "password": "Password123"
+      },
+      {
+        "username": "sa",
+        "password": "admin"
+      },
+      {
+        "username": "sa",
+        "password": "1234"
+      },
+      {
+        "username": "sa",
+        "password": "changeme"
+      },
+      {
+        "username": "admin",
+        "password": "admin"
+      },
+      {
+        "username": "sql",
+        "password": "sql"
+      }
+    ]
+  },
+  "postgresql": {
+    "port": 5432,
+    "credentials": [
+      {
+        "username": "postgres",
+        "password": "postgres"
+      },
+      {
+        "username": "postgres",
+        "password": "password"
+      },
+      {
+        "username": "postgres",
+        "password": "admin"
+      },
+      {
+        "username": "postgres",
+        "password": ""
+      },
+      {
+        "username": "postgres",
+        "password": "123456"
+      },
+      {
+        "username": "admin",
+        "password": "admin"
+      },
+      {
+        "username": "user",
+        "password": "user"
+      },
+      {
+        "username": "dbuser",
+        "password": "dbuser"
+      }
+    ]
+  },
+  "redis": {
+    "port": 6379,
+    "credentials": [
+      {
+        "username": "",
+        "password": ""
+      },
+      {
+        "username": "",
+        "password": "redis"
+      },
+      {
+        "username": "",
+        "password": "password"
+      },
+      {
+        "username": "",
+        "password": "admin"
+      },
+      {
+        "username": "",
+        "password": "foobared"
+      },
+      {
+        "username": "",
+        "password": "123456"
+      },
+      {
+        "username": "default",
+        "password": "redis"
+      },
+      {
+        "username": "default",
+        "password": "password"
+      }
+    ]
+  },
+  "mongodb": {
+    "port": 27017,
+    "credentials": [
+      {
+        "username": "",
+        "password": ""
+      },
+      {
+        "username": "admin",
+        "password": "admin"
+      },
+      {
+        "username": "admin",
+        "password": "password"
+      },
+      {
+        "username": "root",
+        "password": "root"
+      },
+      {
+        "username": "mongouser",
+        "password": "mongouser"
+      },
+      {
+        "username": "mongo",
+        "password": "mongo"
+      }
+    ]
+  },
+  "http_admin": {
+    "ports": [
+      80,
+      8080,
+      8443,
+      443,
+      8000,
+      8888,
+      3000,
+      9090,
+      8081
+    ],
+    "panels": [
+      {
+        "path": "/manager/html",
+        "product": "Apache Tomcat",
+        "credentials": [
+          {
+            "username": "tomcat",
+            "password": "tomcat"
+          },
+          {
+            "username": "admin",
+            "password": "admin"
+          },
+          {
+            "username": "tomcat",
+            "password": "s3cret"
+          },
+          {
+            "username": "admin",
+            "password": "tomcat"
+          },
+          {
+            "username": "manager",
+            "password": "manager"
+          },
+          {
+            "username": "role1",
+            "password": "tomcat"
+          }
+        ]
+      },
+      {
+        "path": "/admin/",
+        "product": "Generic admin panel",
+        "credentials": [
+          {
+            "username": "admin",
+            "password": "admin"
+          },
+          {
+            "username": "admin",
+            "password": "password"
+          },
+          {
+            "username": "admin",
+            "password": "1234"
+          },
+          {
+            "username": "admin",
+            "password": "changeme"
+          },
+          {
+            "username": "administrator",
+            "password": "administrator"
+          },
+          {
+            "username": "root",
+            "password": "root"
+          }
+        ]
+      },
+      {
+        "path": "/login",
+        "product": "Generic login",
+        "credentials": [
+          {
+            "username": "admin",
+            "password": "admin"
+          },
+          {
+            "username": "admin",
+            "password": "password"
+          },
+          {
+            "username": "user",
+            "password": "user"
+          }
+        ]
+      },
+      {
+        "path": "/wp-login.php",
+        "product": "WordPress",
+        "credentials": [
+          {
+            "username": "admin",
+            "password": "admin"
+          },
+          {
+            "username": "admin",
+            "password": "password"
+          },
+          {
+            "username": "admin",
+            "password": "wordpress"
+          }
+        ]
+      },
+      {
+        "path": "/phpmyadmin/",
+        "product": "phpMyAdmin",
+        "credentials": [
+          {
+            "username": "root",
+            "password": ""
+          },
+          {
+            "username": "root",
+            "password": "root"
+          },
+          {
+            "username": "root",
+            "password": "password"
+          },
+          {
+            "username": "admin",
+            "password": "admin"
+          }
+        ]
+      },
+      {
+        "path": "/jenkins/login",
+        "product": "Jenkins",
+        "credentials": [
+          {
+            "username": "admin",
+            "password": "admin"
+          },
+          {
+            "username": "admin",
+            "password": "password"
+          },
+          {
+            "username": "jenkins",
+            "password": "jenkins"
+          }
+        ]
+      }
+    ]
+  }
+}

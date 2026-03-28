@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PACDOOR Assessment Report</title>
+<style>
+/* ── Reset & Base ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-tertiary: #1a1a1a;
+  --bg-card: #141414;
+  --border: #2a2a2a;
+  --border-light: #333333;
+  --text-primary: #e0e0e0;
+  --text-secondary: #999999;
+  --text-muted: #666666;
+  --accent: #00ff41;
+  --accent-dim: #00cc33;
+  --accent-dark: #00991a;
+  --severity-critical: #dc2626;
+  --severity-critical-bg: rgba(220, 38, 38, 0.12);
+  --severity-high: #ea580c;
+  --severity-high-bg: rgba(234, 88, 12, 0.12);
+  --severity-medium: #d97706;
+  --severity-medium-bg: rgba(217, 119, 6, 0.12);
+  --severity-low: #65a30d;
+  --severity-low-bg: rgba(101, 163, 13, 0.12);
+  --severity-info: #6b7280;
+  --severity-info-bg: rgba(107, 114, 128, 0.12);
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Header ────────────────────────────────────────────────────────── */
+.report-header {
+  background: linear-gradient(180deg, #0f1a0f 0%, var(--bg-primary) 100%);
+  border-bottom: 1px solid var(--accent-dark);
+  padding: 40px 0;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.logo-section h1 {
+  font-family: var(--font-mono);
+  font-size: 2.2em;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.logo-section .subtitle {
+  font-size: 0.95em;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+}
+
+.scan-meta {
+  text-align: right;
+  font-size: 0.9em;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.scan-meta strong { color: var(--text-primary); }
+
+/* ── Section Titles ────────────────────────────────────────────────── */
+.section {
+  margin: 48px 0;
+}
+
+.section-title {
+  font-family: var(--font-mono);
+  font-size: 1.3em;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--accent-dark);
+  margin-bottom: 24px;
+}
+
+/* ── Executive Summary ─────────────────────────────────────────────── */
+.risk-banner {
+  padding: 20px 28px;
+  border-radius: 8px;
+  margin-bottom: 28px;
+  border: 1px solid;
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.risk-banner.risk-critical {
+  background: var(--severity-critical-bg);
+  border-color: var(--severity-critical);
+  color: #fca5a5;
+}
+
+.risk-banner.risk-high {
+  background: var(--severity-high-bg);
+  border-color: var(--severity-high);
+  color: #fdba74;
+}
+
+.risk-banner.risk-medium {
+  background: var(--severity-medium-bg);
+  border-color: var(--severity-medium);
+  color: #fcd34d;
+}
+
+.risk-banner.risk-low {
+  background: var(--severity-low-bg);
+  border-color: var(--severity-low);
+  color: #bef264;
+}
+
+.risk-banner.risk-info {
+  background: var(--severity-info-bg);
+  border-color: var(--severity-info);
+  color: #d1d5db;
+}
+
+.risk-banner .risk-label { text-transform: uppercase; letter-spacing: 2px; }
+
+/* ── Metrics Dashboard ─────────────────────────────────────────────── */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.metric-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+
+.metric-card:hover { border-color: var(--accent-dark); }
+
+.metric-card .value {
+  font-family: var(--font-mono);
+  font-size: 2.4em;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1.1;
+}
+
+.metric-card .value.critical { color: var(--severity-critical); }
+.metric-card .value.high { color: var(--severity-high); }
+.metric-card .value.medium { color: var(--severity-medium); }
+
+.metric-card .label {
+  font-size: 0.8em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 8px;
+}
+
+/* ── Top Critical Findings ─────────────────────────────────────────── */
+.critical-findings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.critical-card {
+  background: var(--bg-card);
+  border: 1px solid var(--severity-critical);
+  border-left: 4px solid var(--severity-critical);
+  border-radius: 6px;
+  padding: 16px 20px;
+}
+
+.critical-card .finding-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.critical-card .finding-desc {
+  font-size: 0.85em;
+  color: var(--text-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Hosts Affected Badge ──────────────────────────────────────────── */
+.hosts-badge {
+  display: inline-block;
+  background: rgba(0, 255, 65, 0.1);
+  color: var(--accent);
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  border-radius: 12px;
+  padding: 2px 10px;
+  font-size: 0.8em;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ── Tables ────────────────────────────────────────────────────────── */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+
+thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+th {
+  background: var(--bg-tertiary);
+  color: var(--accent-dim);
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 2px solid var(--border-light);
+  white-space: nowrap;
+}
+
+td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+tbody tr { background: var(--bg-primary); }
+tbody tr:nth-child(even) { background: var(--bg-secondary); }
+tbody tr:hover { background: rgba(0, 255, 65, 0.03); }
+
+/* ── Severity Badges ───────────────────────────────────────────────── */
+.severity-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.75em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.severity-badge.critical {
+  background: var(--severity-critical);
+  color: #fff;
+}
+
+.severity-badge.high {
+  background: var(--severity-high);
+  color: #fff;
+}
+
+.severity-badge.medium {
+  background: var(--severity-medium);
+  color: #fff;
+}
+
+.severity-badge.low {
+  background: var(--severity-low);
+  color: #fff;
+}
+
+.severity-badge.info {
+  background: var(--severity-info);
+  color: #fff;
+}
+
+/* ── Accordion (CSS-only) ──────────────────────────────────────────── */
+.accordion-toggle {
+  display: none;
+}
+
+.accordion-label {
+  cursor: pointer;
+  color: var(--accent);
+  font-size: 0.8em;
+  font-family: var(--font-mono);
+  user-select: none;
+}
+
+.accordion-label::before {
+  content: "[+] details";
+}
+
+.accordion-toggle:checked + .accordion-label::before {
+  content: "[-] collapse";
+}
+
+.accordion-content {
+  display: none;
+  padding: 12px 0 4px 0;
+}
+
+.accordion-toggle:checked ~ .accordion-content {
+  display: block;
+}
+
+.detail-block {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin-top: 8px;
+  font-size: 0.88em;
+}
+
+.detail-block h4 {
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  color: var(--accent-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.detail-block p, .detail-block pre {
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.detail-block pre {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  border-radius: 4px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.detail-block .refs a {
+  display: block;
+  font-size: 0.9em;
+  margin-bottom: 2px;
+}
+
+/* ── Attack Paths ──────────────────────────────────────────────────── */
+.attack-path-chain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.path-node {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--accent-dark);
+  border-radius: 6px;
+  padding: 10px 16px;
+  text-align: center;
+  min-width: 100px;
+}
+
+.path-node .node-label {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.path-node .node-detail {
+  font-size: 0.75em;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.path-arrow {
+  color: var(--accent-dark);
+  font-family: var(--font-mono);
+  font-size: 1.4em;
+  padding: 0 8px;
+}
+
+/* ── ATT&CK Heatmap ───────────────────────────────────────────────── */
+.attack-heatmap {
+  overflow-x: auto;
+}
+
+.attack-heatmap table { font-size: 0.8em; }
+
+.attack-heatmap th {
+  font-size: 0.7em;
+  padding: 8px 10px;
+  text-align: center;
+  min-width: 100px;
+}
+
+.attack-heatmap td {
+  text-align: center;
+  padding: 6px 10px;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+
+.technique-cell {
+  border-radius: 4px;
+  padding: 4px 8px;
+  display: inline-block;
+  min-width: 70px;
+}
+
+.technique-cell.score-5 { background: var(--severity-critical); color: #fff; }
+.technique-cell.score-4 { background: var(--severity-high); color: #fff; }
+.technique-cell.score-3 { background: var(--severity-medium); color: #fff; }
+.technique-cell.score-2 { background: #a3a305; color: #fff; }
+.technique-cell.score-1 { background: var(--severity-low); color: #fff; }
+.technique-cell.score-0 { background: var(--bg-tertiary); color: var(--text-muted); }
+
+/* ── Screenshots ───────────────────────────────────────────────────── */
+.screenshot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.screenshot-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+.screenshot-card:hover {
+  border-color: var(--accent-dark);
+}
+
+.screenshot-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  object-position: top left;
+  display: block;
+  border-bottom: 1px solid var(--border);
+}
+
+.screenshot-card .caption {
+  padding: 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Lightbox overlay for full-size screenshot viewing */
+.screenshot-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.92);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 40px;
+}
+
+.screenshot-overlay.active {
+  display: flex;
+}
+
+.screenshot-overlay img {
+  max-width: 95%;
+  max-height: 95%;
+  border: 2px solid var(--accent-dark);
+  border-radius: 8px;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+}
+
+.screenshot-overlay .close-hint {
+  position: fixed;
+  top: 16px;
+  right: 24px;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--text-muted);
+}
+
+/* ── Module Execution Log ──────────────────────────────────────────── */
+.timeline {
+  position: relative;
+  padding-left: 24px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-light);
+}
+
+.timeline-item {
+  position: relative;
+  padding: 12px 0 12px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.timeline-item:last-child { border-bottom: none; }
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 18px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-dark);
+  background: var(--bg-primary);
+}
+
+.timeline-item.status-completed::before { background: var(--accent); border-color: var(--accent); }
+.timeline-item.status-failed::before { background: var(--severity-critical); border-color: var(--severity-critical); }
+.timeline-item.status-skipped::before { background: var(--text-muted); border-color: var(--text-muted); }
+
+.timeline-item .module-name {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95em;
+}
+
+.timeline-item .module-meta {
+  font-size: 0.8em;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.timeline-item .module-meta span { margin-right: 16px; }
+
+.status-tag {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.75em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-tag.completed { background: rgba(0, 255, 65, 0.15); color: var(--accent); }
+.status-tag.failed { background: var(--severity-critical-bg); color: #fca5a5; }
+.status-tag.running { background: rgba(59, 130, 246, 0.15); color: #93c5fd; }
+.status-tag.skipped { background: rgba(107, 114, 128, 0.15); color: #9ca3af; }
+.status-tag.pending { background: rgba(107, 114, 128, 0.1); color: var(--text-muted); }
+
+/* ── Footer ────────────────────────────────────────────────────────── */
+.report-footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0;
+  margin-top: 64px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85em;
+}
+
+.report-footer .brand {
+  font-family: var(--font-mono);
+  color: var(--accent-dark);
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+/* ── Empty State ───────────────────────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ── Utility ───────────────────────────────────────────────────────── */
+.mono { font-family: var(--font-mono); }
+.text-muted { color: var(--text-secondary); }
+.mt-16 { margin-top: 16px; }
+
+/* ── Print Styles ──────────────────────────────────────────────────── */
+@media print {
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9f9f9;
+    --bg-tertiary: #f0f0f0;
+    --bg-card: #f5f5f5;
+    --border: #dddddd;
+    --border-light: #cccccc;
+    --text-primary: #111111;
+    --text-secondary: #555555;
+    --text-muted: #888888;
+    --accent: #006622;
+    --accent-dim: #008833;
+    --accent-dark: #004411;
+  }
+
+  body { font-size: 10pt; }
+
+  .report-header {
+    background: none;
+    border-bottom: 2px solid #006622;
+  }
+
+  .logo-section h1 { font-size: 1.5em; color: #006622; }
+
+  .metric-card { border: 1px solid #ccc; break-inside: avoid; }
+  .metric-card .value { color: #111; }
+  .metric-card .value.critical { color: #cc0000; }
+  .metric-card .value.high { color: #cc5500; }
+
+  .section { break-inside: avoid; }
+  .table-wrapper { overflow: visible; }
+
+  .severity-badge.critical { background: #cc0000; }
+  .severity-badge.high { background: #cc5500; }
+  .severity-badge.medium { background: #cc8800; }
+  .severity-badge.low { background: #558800; }
+  .severity-badge.info { background: #666666; }
+
+  .accordion-content { display: block !important; }
+  .accordion-label { display: none; }
+
+  .risk-banner {
+    background: none !important;
+    border: 2px solid;
+    color: #111 !important;
+  }
+}
+
+/* ── Responsive ────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .header-content { flex-direction: column; }
+  .scan-meta { text-align: left; }
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .critical-findings { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     HEADER
+     ═══════════════════════════════════════════════════════════════════ -->
+<header class="report-header">
+  <div class="container header-content">
+    <div class="logo-section">
+      <h1>PACDOOR</h1>
+      <div class="subtitle">Automated Security Assessment Report</div>
+    </div>
+    <div class="scan-meta">
+      <div>Scan Date: <strong>{{ scan_date }}</strong></div>
+      <div>Hosts Scanned: <strong>{{ stats.total_hosts }}</strong></div>
+      <div>Total Findings: <strong>{{ stats.total_findings }}</strong></div>
+      <div>Report Generated: <strong>{{ generation_time }}</strong></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     EXECUTIVE SUMMARY
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <h2 class="section-title">Executive Summary</h2>
+
+  <div class="risk-banner risk-{{ overall_risk }}">
+    <span class="risk-label">Overall Risk Rating:</span>
+    {{ overall_risk | upper }}
+    {% if overall_risk == 'critical' %}
+    &mdash; Immediate action required. Critical vulnerabilities detected that may allow full system compromise.
+    {% elif overall_risk == 'high' %}
+    &mdash; Urgent remediation needed. High-severity findings that pose significant risk.
+    {% elif overall_risk == 'medium' %}
+    &mdash; Remediation recommended. Moderate findings that should be addressed in the near term.
+    {% elif overall_risk == 'low' %}
+    &mdash; Minor issues found. Low-severity findings with limited immediate impact.
+    {% else %}
+    &mdash; Informational findings only. No significant vulnerabilities detected.
+    {% endif %}
+  </div>
+
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="value">{{ stats.total_hosts }}</div>
+      <div class="label">Hosts</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">{{ total_ports }}</div>
+      <div class="label">Open Ports</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">{{ stats.total_findings }}</div>
+      <div class="label">Total Findings</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">{{ stats.get('total_consolidated', stats.total_findings) }}</div>
+      <div class="label">Unique Findings</div>
+    </div>
+    <div class="metric-card">
+      <div class="value critical">{{ severity_counts.get('critical', 0) }}</div>
+      <div class="label">Critical</div>
+    </div>
+    <div class="metric-card">
+      <div class="value high">{{ severity_counts.get('high', 0) }}</div>
+      <div class="label">High</div>
+    </div>
+    <div class="metric-card">
+      <div class="value medium">{{ severity_counts.get('medium', 0) }}</div>
+      <div class="label">Medium</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">{{ severity_counts.get('low', 0) }}</div>
+      <div class="label">Low</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">{{ total_credentials }}</div>
+      <div class="label">Credentials</div>
+    </div>
+  </div>
+
+  {% if top_critical %}
+  <h3 style="color: var(--severity-critical); font-size: 0.95em; margin-bottom: 12px; font-family: var(--font-mono); letter-spacing: 1px;">TOP CRITICAL FINDINGS</h3>
+  <div class="critical-findings">
+    {% for f in top_critical %}
+    <div class="critical-card">
+      <div class="finding-title">{{ f.get('title', '') | e }}</div>
+      <div class="finding-desc">{{ f.get('description', '') | e }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     CONSOLIDATED FINDINGS (DEDUPLICATED)
+     ═══════════════════════════════════════════════════════════════════ -->
+{% if consolidated_findings %}
+<section class="section">
+  <h2 class="section-title">Consolidated Findings</h2>
+  <p style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 16px;">
+    {{ correlation_stats.get('total_raw', 0) }} raw findings correlated into
+    {{ correlation_stats.get('total_consolidated', 0) }} unique findings
+    ({{ correlation_stats.get('dedup_ratio', 1.0) }}x reduction)
+  </p>
+
+  {% set top_widespread = correlation_stats.get('top_widespread', []) %}
+  {% if top_widespread %}
+  <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;">
+    {% for tw in top_widespread %}
+    <div style="background: var(--bg-tertiary); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; font-size: 0.85em;">
+      <span class="severity-badge {{ tw.get('severity', 'info') }}">{{ tw.get('severity', 'info') }}</span>
+      <strong style="margin-left: 6px;">{{ tw.get('title', '') | e }}</strong>
+      <span class="hosts-badge" style="margin-left: 8px;">{{ tw.get('affected_count', 0) }} hosts</span>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Severity</th>
+          <th>Title</th>
+          <th>Hosts Affected</th>
+          <th>Module</th>
+          <th>CVE</th>
+          <th>CVSS</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for cf in consolidated_findings %}
+        {% set sev = (cf.get('severity', 'info') | string | lower) %}
+        <tr>
+          <td><span class="severity-badge {{ sev }}">{{ sev }}</span></td>
+          <td>{{ cf.get('title', '') | e }}</td>
+          <td>
+            <span class="hosts-badge">{{ cf.get('affected_count', 0) }} host{{ 's' if cf.get('affected_count', 0) != 1 else '' }}</span>
+          </td>
+          <td class="mono text-muted" style="font-size:0.85em">{{ cf.get('module_name', '') | e }}</td>
+          <td class="mono">{{ cf.get('cve_id', '') | e if cf.get('cve_id') else '—' }}</td>
+          <td class="mono">{{ '%.1f' | format(cf.get('cvss_score', 0) | float) if cf.get('cvss_score') else '—' }}</td>
+          <td>
+            <input type="checkbox" class="accordion-toggle" id="cfinding-{{ loop.index }}">
+            <label class="accordion-label" for="cfinding-{{ loop.index }}"></label>
+            <div class="accordion-content">
+              <div class="detail-block">
+                {% if cf.get('description') %}
+                <h4>Description</h4>
+                <p>{{ cf.get('description', '') | e }}</p>
+                {% endif %}
+
+                <h4>Affected Hosts</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;">
+                  {% for host_ip in cf.get('affected_hosts', []) %}
+                  <span style="background: var(--bg-tertiary); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; font-family: var(--font-mono); font-size: 0.85em;">{{ host_ip | e }}</span>
+                  {% endfor %}
+                </div>
+
+                {% set evidence_list = cf.get('evidence_samples', []) or [] %}
+                {% if evidence_list %}
+                <h4>Evidence (samples)</h4>
+                {% for ev in evidence_list %}
+                {% if ev is mapping %}
+                <pre>{{ ev.get('kind', '') | e }}: {{ ev.get('data', '') | e }}</pre>
+                {% else %}
+                <pre>{{ ev | string | e }}</pre>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+
+                {% if cf.get('remediation') %}
+                <h4>Remediation</h4>
+                <p>{{ cf.get('remediation', '') | e }}</p>
+                {% endif %}
+
+                {% set refs = cf.get('references', []) or [] %}
+                {% if refs %}
+                <h4>References</h4>
+                <div class="refs">
+                  {% for r in refs %}
+                  <a href="{{ r | e }}" target="_blank" rel="noopener">{{ r | e }}</a>
+                  {% endfor %}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endif %}
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     FINDINGS TABLE (RAW / ALL)
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <h2 class="section-title">All Findings (Raw)</h2>
+  {% if findings %}
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Severity</th>
+          <th>Title</th>
+          <th>Module</th>
+          <th>CVE</th>
+          <th>CVSS</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in findings %}
+        {% set sev = f.get('severity', 'info') | lower %}
+        <tr>
+          <td><span class="severity-badge {{ sev }}">{{ sev }}</span></td>
+          <td>{{ f.get('title', '') | e }}</td>
+          <td class="mono text-muted" style="font-size:0.85em">{{ f.get('module_name', '') | e }}</td>
+          <td class="mono">{{ f.get('cve_id', '') | e if f.get('cve_id') else '—' }}</td>
+          <td class="mono">{{ '%.1f' | format(f.get('cvss_score', 0) | float) if f.get('cvss_score') else '—' }}</td>
+          <td>
+            <input type="checkbox" class="accordion-toggle" id="finding-{{ loop.index }}">
+            <label class="accordion-label" for="finding-{{ loop.index }}"></label>
+            <div class="accordion-content">
+              <div class="detail-block">
+                {% if f.get('description') %}
+                <h4>Description</h4>
+                <p>{{ f.get('description', '') | e }}</p>
+                {% endif %}
+
+                {% set evidence_list = f.get('evidence', []) or [] %}
+                {% if evidence_list %}
+                <h4>Evidence</h4>
+                {% for ev in evidence_list %}
+                {% if ev is mapping %}
+                <pre>{{ ev.get('kind', '') | e }}: {{ ev.get('data', '') | e }}</pre>
+                {% else %}
+                <pre>{{ ev | string | e }}</pre>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+
+                {% if f.get('remediation') %}
+                <h4>Remediation</h4>
+                <p>{{ f.get('remediation', '') | e }}</p>
+                {% endif %}
+
+                {% set refs = f.get('references', []) or [] %}
+                {% if refs %}
+                <h4>References</h4>
+                <div class="refs">
+                  {% for r in refs %}
+                  <a href="{{ r | e }}" target="_blank" rel="noopener">{{ r | e }}</a>
+                  {% endfor %}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">No findings recorded.</div>
+  {% endif %}
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     HOSTS TABLE
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <h2 class="section-title">Hosts</h2>
+  {% if hosts %}
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>IP Address</th>
+          <th>Hostname</th>
+          <th>OS</th>
+          <th>Profile</th>
+          <th>Open Ports</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for h in hosts %}
+        <tr>
+          <td class="mono">{{ h.get('ip', '') | e }}</td>
+          <td>{{ h.get('hostname', '') | e if h.get('hostname') else '—' }}</td>
+          <td>{{ h.get('os', '') | e if h.get('os') else '—' }}</td>
+          <td class="mono text-muted">{{ h.get('profile', '') | e }}</td>
+          <td class="mono">{{ host_port_counts.get(h.get('id', ''), 0) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">No hosts discovered.</div>
+  {% endif %}
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PORTS TABLE
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <h2 class="section-title">Ports &amp; Services</h2>
+  {% if ports %}
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Host</th>
+          <th>Port</th>
+          <th>Protocol</th>
+          <th>Service</th>
+          <th>Product</th>
+          <th>Version</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in ports %}
+        <tr>
+          <td class="mono">{{ host_ip_map.get(p.get('host_id', ''), p.get('host_id', '')) | e }}</td>
+          <td class="mono">{{ p.get('port', '') | e }}</td>
+          <td class="mono text-muted">{{ p.get('protocol', 'tcp') | e }}</td>
+          <td>{{ p.get('service_name', '') | e if p.get('service_name') else '—' }}</td>
+          <td>{{ p.get('product', '') | e if p.get('product') else '—' }}</td>
+          <td class="mono">{{ p.get('service_version', '') | e if p.get('service_version') else '—' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">No ports discovered.</div>
+  {% endif %}
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     CREDENTIALS TABLE
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <h2 class="section-title">Credentials</h2>
+  {% if credentials %}
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Host</th>
+          <th>Username</th>
+          <th>Type</th>
+          <th>Value (masked)</th>
+          <th>Source Module</th>
+          <th>Admin</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in credentials %}
+        {% set raw_val = c.get('value', '') | string %}
+        {% set masked = raw_val[:2] ~ '*' * ([0, raw_val|length - 2] | max) if raw_val|length > 2 else '**' %}
+        <tr>
+          <td class="mono">{{ host_ip_map.get(c.get('host_id', ''), c.get('host_id', '')) | e }}</td>
+          <td class="mono">{{ c.get('username', '') | e }}</td>
+          <td>{{ c.get('cred_type', '') | e }}</td>
+          <td class="mono text-muted">{{ masked | e }}</td>
+          <td class="mono text-muted" style="font-size:0.85em">{{ c.get('source_module', '') | e }}</td>
+          <td>{% if c.get('admin') %}<span style="color:var(--severity-critical);font-weight:600">Yes</span>{% else %}No{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">No credentials discovered.</div>
+  {% endif %}
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     ATTACK PATHS
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <h2 class="section-title">Attack Paths</h2>
+  {% if attack_paths %}
+
+  {# Group attack paths into chains by sorting on step_order #}
+  {% set sorted_paths = attack_paths | sort(attribute='step_order') if attack_paths[0] is mapping and attack_paths[0].get('step_order') is defined else attack_paths %}
+
+  <div class="attack-path-chain">
+    {% for ap in sorted_paths %}
+    {% if loop.first %}
+    <div class="path-node">
+      <div class="node-label">{{ host_ip_map.get(ap.get('from_host_id', ''), ap.get('from_host_id', '')) | e }}</div>
+      <div class="node-detail">Origin</div>
+    </div>
+    {% endif %}
+    <div class="path-arrow">&#8594;</div>
+    <div class="path-node">
+      <div class="node-label">{{ host_ip_map.get(ap.get('to_host_id', ''), ap.get('to_host_id', '')) | e }}</div>
+      <div class="node-detail">{{ ap.get('technique_id', '') | e }}</div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="table-wrapper mt-16">
+    <table>
+      <thead>
+        <tr>
+          <th>Step</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Technique</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ap in sorted_paths %}
+        <tr>
+          <td class="mono">{{ ap.get('step_order', '') | e }}</td>
+          <td class="mono">{{ host_ip_map.get(ap.get('from_host_id', ''), ap.get('from_host_id', '')) | e }}</td>
+          <td class="mono">{{ host_ip_map.get(ap.get('to_host_id', ''), ap.get('to_host_id', '')) | e }}</td>
+          <td class="mono">{{ ap.get('technique_id', '') | e }}</td>
+          <td>{{ ap.get('description', '') | e }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">No attack paths identified.</div>
+  {% endif %}
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     SCREENSHOTS
+     ═══════════════════════════════════════════════════════════════════ -->
+{% if screenshots %}
+<section class="section">
+  <h2 class="section-title">Screenshots</h2>
+  <p style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 16px;">
+    {{ screenshots | length }} screenshot{{ 's' if screenshots | length != 1 else '' }} captured from web services. Click to enlarge.
+  </p>
+  <div class="screenshot-grid">
+    {% for ss in screenshots %}
+    <div class="screenshot-card" onclick="openScreenshot('{{ ss.data_uri }}', '{{ ss.url_hint | e }}')">
+      <img src="{{ ss.data_uri }}" alt="Screenshot of {{ ss.url_hint | e }}" loading="lazy">
+      <div class="caption">{{ ss.url_hint | e }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<div class="screenshot-overlay" id="screenshotOverlay" onclick="closeScreenshot()">
+  <div class="close-hint">[ESC] or click to close</div>
+  <img id="screenshotFull" src="" alt="Full screenshot">
+</div>
+
+<script>
+function openScreenshot(src, alt) {
+  var overlay = document.getElementById('screenshotOverlay');
+  var img = document.getElementById('screenshotFull');
+  img.src = src;
+  img.alt = 'Screenshot of ' + alt;
+  overlay.classList.add('active');
+}
+function closeScreenshot() {
+  document.getElementById('screenshotOverlay').classList.remove('active');
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeScreenshot();
+});
+</script>
+{% endif %}
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     ATT&CK COVERAGE HEATMAP
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <h2 class="section-title">MITRE ATT&amp;CK Coverage</h2>
+  {% if attack_techniques %}
+  <div class="attack-heatmap">
+    <table>
+      <thead>
+        <tr>
+          {% for tactic in attack_tactics %}
+          <th>{{ tactic | e }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {# Compute max rows needed across tactics #}
+        {% set ns = namespace(max_rows=0) %}
+        {% for tactic in attack_tactics %}
+          {% set count = attack_matrix.get(tactic, []) | length %}
+          {% if count > ns.max_rows %}{% set ns.max_rows = count %}{% endif %}
+        {% endfor %}
+
+        {% for row_idx in range(ns.max_rows) %}
+        <tr>
+          {% for tactic in attack_tactics %}
+          {% set techs = attack_matrix.get(tactic, []) %}
+          {% if row_idx < techs | length %}
+          {% set t = techs[row_idx] %}
+          <td><span class="technique-cell score-{{ t.score }}">{{ t.id | e }}</span></td>
+          {% else %}
+          <td></td>
+          {% endif %}
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-16" style="font-size:0.8em; color:var(--text-muted);">
+    Legend:
+    <span class="technique-cell score-5" style="margin-left:8px">Critical</span>
+    <span class="technique-cell score-4" style="margin-left:4px">High</span>
+    <span class="technique-cell score-3" style="margin-left:4px">Medium</span>
+    <span class="technique-cell score-2" style="margin-left:4px">Low</span>
+    <span class="technique-cell score-1" style="margin-left:4px">Info</span>
+  </div>
+  {% else %}
+  <div class="empty-state">No ATT&amp;CK techniques mapped from findings.</div>
+  {% endif %}
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     MODULE EXECUTION LOG
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <h2 class="section-title">Module Execution Log</h2>
+  {% if module_runs %}
+  <div class="timeline">
+    {% for mr in module_runs %}
+    <div class="timeline-item status-{{ mr.get('status', 'pending') | lower }}">
+      <div class="module-name">{{ mr.get('module_name', '') | e }}</div>
+      <div class="module-meta">
+        <span><span class="status-tag {{ mr.get('status', 'pending') | lower }}">{{ mr.get('status', 'pending') | e }}</span></span>
+        {% if mr.get('started_at') %}
+        <span>Started: {{ mr.get('started_at', '') | e }}</span>
+        {% endif %}
+        {% if mr.get('completed_at') and mr.get('started_at') %}
+        <span>Duration: {{ mr.get('duration', '—') }}</span>
+        {% endif %}
+        <span>Findings: {{ mr.get('findings_count', 0) }}</span>
+        {% if mr.get('host_id') %}
+        <span>Host: {{ host_ip_map.get(mr.get('host_id', ''), mr.get('host_id', '')) | e }}</span>
+        {% endif %}
+        {% if mr.get('error') %}
+        <span style="color:var(--severity-critical)">Error: {{ mr.get('error', '') | e }}</span>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">No module execution data recorded.</div>
+  {% endif %}
+</section>
+
+</main>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════════════════════════ -->
+<footer class="report-footer">
+  <div class="container">
+    <div class="brand">PACDOOR</div>
+    <div style="margin-top:8px">
+      Automated Security Assessment Report &middot; Generated {{ generation_time }}
+    </div>
+    <div style="margin-top:4px; font-size:0.9em">
+      This report was generated automatically. Findings should be validated by a qualified security professional.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

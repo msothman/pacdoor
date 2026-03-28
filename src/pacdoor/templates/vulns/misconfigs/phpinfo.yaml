@@ -1,0 +1,29 @@
+id: phpinfo-disclosure
+info:
+  name: PHP Info Page Disclosure
+  severity: medium
+  description: >
+    A phpinfo() page is publicly accessible. It discloses detailed
+    server configuration including PHP version, loaded modules, OS
+    version, internal paths, and environment variables that can aid
+    further attacks.
+  classification:
+    cvss-score: 5.3
+  reference:
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/05-Review_Web_Page_Content_for_Information_Leakage
+  remediation: >
+    Remove or restrict access to phpinfo.php. Never leave diagnostic
+    pages accessible in production environments.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/phpinfo.php"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "phpinfo()"

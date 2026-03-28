@@ -1,0 +1,30 @@
+id: exposed-git
+info:
+  name: Exposed .git Directory
+  severity: high
+  description: >
+    The .git directory is publicly accessible. An attacker can
+    reconstruct the full source code, commit history, and potentially
+    extract secrets (API keys, database credentials) stored in past
+    commits.
+  classification:
+    cvss-score: 7.5
+  reference:
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/05-Enumerate_Infrastructure_and_Application_Admin_Interfaces
+  remediation: >
+    Block access to the .git directory in your web server configuration.
+    For Apache add 'RedirectMatch 404 /\\.git'. For Nginx add
+    'location ~ /\\.git { deny all; }'.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/.git/HEAD"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "ref:"

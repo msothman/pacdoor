@@ -1,0 +1,38 @@
+id: docker-api-exposed
+info:
+  name: Docker Remote API Exposed Without Authentication
+  severity: critical
+  description: >
+    The Docker Engine API is accessible without authentication over the
+    network.  This allows an unauthenticated attacker to list and
+    manipulate containers, pull and push images, create privileged
+    containers with host filesystem mounts, and achieve full remote code
+    execution on the host.
+  classification:
+    cvss-score: 9.8
+  reference:
+    - https://docs.docker.com/engine/api/
+    - https://docs.docker.com/engine/security/protect-access/
+  remediation: >
+    Do not expose the Docker API to untrusted networks.  If remote access
+    is required, enable TLS mutual authentication with client certificates.
+    Use Docker contexts or SSH-based remote access instead of binding the
+    TCP socket.  Consider using a container orchestrator with built-in
+    RBAC such as Kubernetes.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/v1.24/containers/json"
+      - "{{BaseURL}}/containers/json"
+      - "{{BaseURL}}/version"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "DockerVersion"
+          - "ApiVersion"
+          - "Containers"

@@ -1,0 +1,37 @@
+id: ds-store-exposed
+info:
+  name: ".DS_Store File Exposed"
+  severity: medium
+  description: >
+    A macOS .DS_Store file is publicly accessible on the web server.
+    .DS_Store files are created by macOS Finder and contain metadata
+    about directory contents including file names, folder structure,
+    icon positions, and custom attributes.  An attacker can parse
+    this binary file to enumerate hidden files and directories on
+    the server that would not otherwise be discoverable, potentially
+    revealing admin panels, backup files, configuration files, and
+    other sensitive resources.
+  classification:
+    cvss-score: 5.3
+  reference:
+    - https://en.wikipedia.org/wiki/.DS_Store
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/04-Review_Old_Backup_and_Unreferenced_Files_for_Sensitive_Information
+  remediation: >
+    Block access to .DS_Store files in your web server configuration.
+    For Nginx add 'location ~ /\\.DS_Store { deny all; }'.  For Apache
+    add 'RedirectMatch 404 /\\.DS_Store'.  Remove existing .DS_Store
+    files from the web root.  Add .DS_Store to your deployment
+    exclusion rules and .gitignore.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/.DS_Store"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "Bud1"

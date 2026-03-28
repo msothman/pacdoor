@@ -1,0 +1,38 @@
+id: nginx-stub-status-exposed
+info:
+  name: "Nginx Stub Status Exposed"
+  severity: low
+  description: >
+    The Nginx stub_status module is enabled and publicly accessible.
+    This page reveals active connections, accepted connections, handled
+    connections, total requests, and connection states (reading,
+    writing, waiting).  While less detailed than Apache's server-status,
+    this information can help attackers understand server capacity and
+    time denial-of-service or brute-force attacks based on load.
+  classification:
+    cvss-score: 3.7
+  reference:
+    - https://nginx.org/en/docs/http/ngx_http_stub_status_module.html
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/05-Enumerate_Infrastructure_and_Application_Admin_Interfaces
+  remediation: >
+    Restrict access to the stub_status endpoint using Nginx allow/deny
+    directives to limit it to trusted management IPs only.  Move the
+    status endpoint to a non-standard path and bind it to a management
+    interface that is not publicly accessible.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/nginx_status"
+      - "{{BaseURL}}/stub_status"
+      - "{{BaseURL}}/nginx-status"
+      - "{{BaseURL}}/status"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status: [200]
+      - type: word
+        part: body
+        words:
+          - "Active connections"
+          - "server accepts handled requests"
